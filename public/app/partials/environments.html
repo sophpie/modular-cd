@@ -1,0 +1,17 @@
+<h1>Environments</h1>
+<div ng-controler="Environment_Ctrl">
+	<div class="leftColumn">
+	<ul>
+	    <li ng-repeat="environment in environmentList.environments">
+	        <a href="/#/environment/{{environment.id}}">{{environment.name}}</a>
+	    </li>
+	</ul>
+	</div>
+	
+	<div class="content">
+	   <ul ng-model="current_environment">
+	       <li>Name : {{current_environment.name}}<li>
+	   </ul>
+	</div>
+
+</div>

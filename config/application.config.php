@@ -4,6 +4,8 @@ return array(
     'modules' => array(
         'Application',
         'Api',
+    		
+    	'ZfrCors',
         
         'Common',
         'Hal',
@@ -12,6 +14,7 @@ return array(
         'Environment',
         'DoctrineModule',
         'DoctrineMongoODMModule',
+    	
     ),
 
     // These are various options for the listeners attached to the ModuleManager

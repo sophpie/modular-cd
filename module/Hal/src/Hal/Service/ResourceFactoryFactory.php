@@ -13,7 +13,9 @@ class ResourceFactoryFactory implements FactoryInterface
 	 */
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
-		$resourceFactory = new ResourceFactory();
+		$config = $serviceLocator->get('config');
+		$halMapping = $config['hal_mapper'];
+		$resourceFactory = new ResourceFactory($halMapping);
 		$resourceFactory->setServiceLocator($serviceLocator);
 		return $resourceFactory;
 	}

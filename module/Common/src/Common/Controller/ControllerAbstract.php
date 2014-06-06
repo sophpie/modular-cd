@@ -85,6 +85,7 @@ abstract class ControllerAbstract extends AbstractRestfulController
 		else $resource = $this->doctrine2Hal($result);
 		$response = $this->getResponse();
 		$response->setContent(json_encode($resource,JSON_PRETTY_PRINT));
+		$response->getHeaders()->addHeaderLine('Content-Type','application/json');
 		return $response;
 	}
 	

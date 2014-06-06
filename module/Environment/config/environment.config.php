@@ -6,4 +6,10 @@ return array(
 			'device' => 'Environment\Controller\DeviceController'
 		),
 	),
+		
+	'hal_mapper' => array(
+		'Environment\Model\Environment' => 'environment',
+		'Environment\Model\Device\Device' => 'device',
+		'Environment\Model\Device\Jenkins' => 'device',
+	),
 );

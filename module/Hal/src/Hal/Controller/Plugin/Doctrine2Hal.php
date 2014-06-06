@@ -91,30 +91,7 @@ class Doctrine2Hal extends AbstractPlugin
 	protected function convertObject($object)
 	{
 		$resource = $this->getHalResourceFactory()->fromDoctrineDocument($object);
-		$resource->addLink(Resource::LINK_TYPE_SELF, $this->getBaseUrl() . $object->getId());
-		$this->setEmbeddedLinks($resource);
 		return $resource;
-	}
-	
-	/**
-	 * Set embedded links
-	 * 
-	 * @param resource $resource
-	 */
-	protected function setEmbeddedLinks($resource)
-	{
-		foreach ($resource->getEmbedded() as $embedded){
-			if (is_array($embedded)){
-				foreach ($embedded as $subEmb){
-					$id = $subEmb->getProperty('id');
-					$subEmb->addLink(Resource::LINK_TYPE_SELF, $this->getBaseUrl() . $id);
-				}
-			}
-			else {
-				$id = $embedded->getProperty('id');
-				$embedded->addLink(Resource::LINK_TYPE_SELF, $this->getBaseUrl() . $id);
-			}
-		}
 	}
 	
 	/**
@@ -125,8 +102,6 @@ class Doctrine2Hal extends AbstractPlugin
 	protected function convertCursor($cursor)
 	{
 		$resource = $this->getHalResourceFactory()->fromDoctrineCursor($cursor,$this->getHalCollectionName());
-		$resource->addLink(Resource::LINK_TYPE_SELF, $this->getBaseUrl());
-		$this->setEmbeddedLinks($resource);
 		return $resource;
 	}
 }

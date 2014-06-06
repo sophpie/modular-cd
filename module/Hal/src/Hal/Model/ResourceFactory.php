@@ -16,6 +16,23 @@ class ResourceFactory implements ServiceLocatorAwareInterface
 	protected $serviceLocator;
 	
 	/**
+	 * HAL controller / model mapping
+	 * 
+	 * @var array
+	 */
+	protected $halMapping = array();
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param array $halMapping
+	 */
+	public function __construct($halMapping)
+	{
+		$this->setHalMapping($halMapping);
+	}
+	
+	/**
 	 * (non-PHPdoc)
 	 * @see \Zend\ServiceManager\ServiceLocatorAwareInterface::setServiceLocator()
 	 */
@@ -53,10 +70,10 @@ class ResourceFactory implements ServiceLocatorAwareInterface
     public function fromDoctrineDocument($document)
     {
     	$resource = new Resource();
-    	$class = get_class($document);
+    	$resource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($document) . '/' . $document->getId());
     	$metada = $this->getDm()
     		->getMetadataFactory()
-			->getMetadataFor($class);
+			->getMetadataFor(get_class($document));
     	foreach ($metada->getFieldNames() as $field){
     		if (in_array($field, $metada->getAssociationNames())) continue;
     		$getter = 'get' . ucfirst($field);
@@ -69,6 +86,7 @@ class ResourceFactory implements ServiceLocatorAwareInterface
     		$embeddedArray = array();
     		foreach ($collection as $id => $item){
     			$embeddedResource = $this->fromDoctrineDocument($item);
+    			$embeddedResource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($item) . '/' . $item->getId());
     			$embeddedArray[] = $embeddedResource;
     		}
     		$resource->addEmbbeded($assoc, $embeddedArray);
@@ -88,9 +106,42 @@ class ResourceFactory implements ServiceLocatorAwareInterface
     	$embeddedArray = array();
     	foreach ($cursor as $id => $item){
     		$embeddedResource = $this->fromDoctrineDocument($item);
+    		$embeddedResource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($item) . '/' . $item->getId());
     		$embeddedArray[] = $embeddedResource;
     	}
+    	$resource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($item));
     	$resource->addEmbbeded($name, $embeddedArray);
     	return $resource;
     }
+    
+	/**
+	 * @return the $halMapping
+	 */
+	public function getHalMapping() {
+		return $this->halMapping;
+	}
+
+	/**
+	 * @param multitype: $halMapping
+	 */
+	public function setHalMapping($halMapping) {
+		$this->halMapping = $halMapping;
+	}
+	
+	/**
+	 * Get controller name for given document class
+	 * 
+	 * @param string $documentClassName
+	 * @return string
+	 */
+	protected function getController($document)
+	{
+		if (is_object($document)) $documentClass = get_class($document);
+		if (is_string($document)) $documentClass = $document;
+		foreach ($this->halMapping as $class => $controller){
+			if (strpos($documentClass,$class) === false) continue;
+			return $controller;
+		}
+	}
+
 }

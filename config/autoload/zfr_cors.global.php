@@ -10,7 +10,9 @@ return array(
          /**
           * Set the list of allowed origins domain with protocol.
           */
-          'allowed_origins' => '*',
+          'allowed_origins' => array(
+				'http://www.cronus.dev',
+		  ),
 
          /**
           * Set the list of HTTP verbs.
@@ -21,7 +23,7 @@ return array(
           * Set the list of headers. This is returned in the preflight request to indicate
           * which HTTP headers can be used when making the actual request
           */
-          //'allowed_headers' => array('Authorization'),
+          'allowed_headers' => array('Authorization','X-Requested-With'),
 
          /**
           * Set the max age of the preflight request in seconds. A non-zero max age means
@@ -34,7 +36,7 @@ return array(
           * to access to some headers using the getResponseHeader() JavaScript method. Please
           * note that this feature is buggy and some browsers do not implement it correctly
           */
-         // 'exposed_headers' => array(),
+          'exposed_headers' => array(),
 
          /**
           * Standard CORS requests do not send or set any cookies by default. For this to work,
