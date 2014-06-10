@@ -20,7 +20,7 @@ return array(
             //
             // 'driver' => 'odm_default',
             //
-            // 'generate_proxies' => true,
+            // 'generate_proxies' => false,
             // 'proxy_dir' => 'data/DoctrineMongoODMModule/Proxy',
             // 'proxy_namespace' => 'DoctrineMongoODMModule\Proxy',
             //
@@ -42,7 +42,7 @@ return array(
                     'Repository\Model\GitHub\GitHubRepository' => 'cronus_odm',
                 	'Environment\Model\Environment' => 'cronus_odm',
                 	'Environment\Model\Device\Device' => 'cronus_odm',
-                	'Environment\Model\Device\Jenkins' => 'cronus_odm',
+                	'Jenkins\Model\Device\Jenkins' => 'cronus_odm',
                 )
             )
             ,

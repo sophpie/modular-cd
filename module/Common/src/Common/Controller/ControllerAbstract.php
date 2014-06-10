@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Mvc\MvcEvent;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Hal\Model\Resource;
+use Common\Model\AngularFragmentProvider;
 
 abstract class ControllerAbstract extends AbstractRestfulController
 {
@@ -87,6 +88,7 @@ abstract class ControllerAbstract extends AbstractRestfulController
 		$response->setContent(json_encode($resource,JSON_PRETTY_PRINT));
 		$response->getHeaders()->addHeaderLine('Content-Type','application/json');
 		return $response;
+		
 	}
 	
 	/**
@@ -110,6 +112,9 @@ abstract class ControllerAbstract extends AbstractRestfulController
 		$page = $this->getPage();
 		$queryBuilder = $this->getDocumentManager()
 			->createQueryBuilder($this->getDocumentClassName());
+		foreach ($this->getMetadata()->getAssociationNames() as $assoc){
+			$queryBuilder->field($assoc)->prime(true);
+		}
 		$queryBuilder->find()->limit($this->getMaxPerPage());
 		if ($page != 1) $queryBuilder->skip($page * $this->getMaxPerPage());
 		$cursor = $queryBuilder->getQuery()->execute();

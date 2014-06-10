@@ -1,0 +1,18 @@
+<div>
+<span>Device : Jenkins CI server</span>
+<span><a ng-click="getDevice(device.id);">[+]</a></span>
+</div>
+
+
+
+<div ng-model="deviceInfos" ng-show="deviceInfos != false">
+    <h5>Infos</h5>
+    <ul class="noList">
+        <li>Url : {{deviceInfos.url}}</li>
+    </ul> 
+    <h5>Jobs</h5>
+    <ul class="noList">
+        <li ng-repeat="job in deviceInfos.jobs">{{job.name}}</li>
+    </ul>
+    
+</div>

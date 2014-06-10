@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var myApp = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives']);
+var myApp = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives','jenkins']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
 	//Environments

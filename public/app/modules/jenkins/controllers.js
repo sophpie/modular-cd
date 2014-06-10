@@ -1,0 +1,3 @@
+function Jenkins($scope,Device){
+	
+}

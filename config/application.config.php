@@ -13,7 +13,7 @@ return array(
         'Ci',
         'Environment',
         'DoctrineModule',
-        'DoctrineMongoODMModule',
+        'DoctrineMongoODMModule','Jenkins',
     	
     ),
 
@@ -26,6 +26,7 @@ return array(
         'module_paths' => array(
             './module',
             './vendor',
+        	'./extension',
         ),
 
         // An array of paths from which to glob configuration files after

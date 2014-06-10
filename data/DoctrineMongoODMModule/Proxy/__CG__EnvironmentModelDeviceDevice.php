@@ -64,10 +64,10 @@ class Device extends \Environment\Model\Device\Device implements \Doctrine\ODM\M
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'name', 'id');
+            return array('__isInitialized__', 'name', 'deviceType', 'id');
         }
 
-        return array('__isInitialized__', 'name', 'id');
+        return array('__isInitialized__', 'name', 'deviceType', 'id');
     }
 
     /**
@@ -193,6 +193,28 @@ class Device extends \Environment\Model\Device\Device implements \Doctrine\ODM\M
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
 
         return parent::setName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDeviceType()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDeviceType', array());
+
+        return parent::getDeviceType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDeviceType($deviceType)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDeviceType', array($deviceType));
+
+        return parent::setDeviceType($deviceType);
     }
 
     /**

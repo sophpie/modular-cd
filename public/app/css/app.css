@@ -28,15 +28,44 @@
   content: "";
   padding: 0;
 }
-
+/* ----- Main content ----- */
 .leftColumn {
 	float: left;
 	display: block;
 	width: 25%;
+	padding-right : 1em;
 }
 
 .content{
 	float: left;
     display: block;
     width: 75%;
+}
+
+/* ----- Headers ----- */
+h1 {
+	font-color : #FFFFFF;
+	background-color : #CFCFFF;
+	margin :0px;
+	padding : 10px;
+}
+
+/* ----- List ----- */
+ul.noList{
+	padding : 0px;
+	margin : 0px;
+}
+ul.noList > li{
+    list-style: none;
+	border-bottom : 1px solid #CCCCCC;
+}
+ul.noList > li > a,p {
+	display:block;
+	padding : 0.5em;
+	color : #000000;
+}
+ul.noList > li > a:hover {
+    text-decoration:none;
+	background-color:#EEEEEE;
+	
 }

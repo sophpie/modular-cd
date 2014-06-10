@@ -2,7 +2,7 @@
 
 /* Services */
 
-var services = angular.module('myApp.services', ['ngResource']).value('version', '0.1');
+var services = angular.module('myApp.services', ['ngResource']);
 
 
 services.factory('Environment_Srv',['$resource',
@@ -11,19 +11,40 @@ services.factory('Environment_Srv',['$resource',
 	}
 ]);
 
+services.factory('Device',['$resource',
+                                    function($resource){
+                                		return $resource('http://api.cronus.dev/device/:id', {id: '@id'});
+                                	}
+                                ]);
 
 services.factory('EnvironmentList_Srv',['Environment_Srv','$q',
     function(Environment_Srv,$q){
 		return function () {
-			var delay = $q.defer();
+			var envListDeffered = $q.defer();
+			var defaultEnvId;
 			Environment_Srv.get(
-					function (environment) {
-						delay.resolve(environment);
+					function (envList) {
+						defaultEnvId = envList.environments[0].id;
+						envListDeffered.resolve(envList);
 					},
 					function () {
-						delay.reject('Cannot load environment');
+						envListDeffered.reject('Cannot load environment');
 					}
 			);
-			return delay.promise;
+			var defaultEnvDeffered = $q.defer();
+			envListDeffered.promise.then(function(d){
+				Environment_Srv.get({id : defaultEnvId },
+						function(currentEnv){
+							defaultEnvDeffered.resolve(currentEnv);
+						},
+						function(){
+							defaultEnvDeffered.reject('Cannot load first environment');
+						}
+				)
+			});
+			return {
+				environmentList: envListDeffered.promise,
+				defaultEnvironment: defaultEnvDeffered.promise
+			}
 		}
 }]);

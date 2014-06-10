@@ -17,7 +17,15 @@ abstract class DeviceAbstract implements PersistentInterface
 	 * @ODM\String
 	 * @var string
 	 */
-	protected  $name;
+	protected $name;
+	
+	/**
+	 * Device type identifer
+	 * 
+	 * @ODM\String
+	 * @var string
+	 */
+	protected $deviceType;
 	
 	/**
 	 * @return the $name
@@ -32,4 +40,19 @@ abstract class DeviceAbstract implements PersistentInterface
 	public function setName($name) {
 		$this->name = $name;
 	}
+	
+	/**
+	 * @return the $deviceType
+	 */
+	public function getDeviceType() {
+		return $this->deviceType;
+	}
+
+	/**
+	 * @param string $deviceType
+	 */
+	public function setDeviceType($deviceType) {
+		$this->deviceType = $deviceType;
+	}
+
 }

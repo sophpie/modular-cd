@@ -1,17 +1,18 @@
-<h1>Environments</h1>
+<h1>Manage your environments</h1>
 <div ng-controler="Environment_Ctrl">
 	<div class="leftColumn">
-	<ul>
+	<ul class="noList">
 	    <li ng-repeat="environment in environmentList.environments">
-	        <a href="/#/environment/{{environment.id}}">{{environment.name}}</a>
+	        <a ng-click="getEnvironment(environment.id);">{{environment.name}}</a>
 	    </li>
 	</ul>
 	</div>
 	
-	<div class="content">
-	   <ul ng-model="current_environment">
-	       <li>Name : {{current_environment.name}}<li>
-	   </ul>
+	<div class="content" ng-model="environment">
+	   <h3>{{environment.name}}</h3>
+       <div ng-repeat="device in environment.devices">
+           <ng-include src="'partials/devices/' + device.deviceType + '/dashboard.html'">
+           </ng-include>
+       </div>
 	</div>
 
-</div>

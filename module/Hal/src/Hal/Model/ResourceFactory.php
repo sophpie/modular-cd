@@ -5,6 +5,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Hal\Model\Resource;
 use Doctrine\ODM\MongoDB\Cursor;
+use Common\Model\AngularFragmentProviderInterface;
 
 class ResourceFactory implements ServiceLocatorAwareInterface
 {
@@ -91,6 +92,14 @@ class ResourceFactory implements ServiceLocatorAwareInterface
     		}
     		$resource->addEmbbeded($assoc, $embeddedArray);
     	}
+    	foreach ($this->getNonPersistentData($document) as $assoc){
+    		$getter = 'get' . ucfirst($assoc);
+    		if ( ! method_exists($document, $getter)) continue;
+    		$resource->addProperty($assoc, $document->$getter());
+    	}
+    	if ($document instanceof AngularFragmentProviderInterface) {
+    		$resource->addProperty('fragmentDir', $document->getAngularFragmentDir());
+    	}
     	return $resource;
     }
     
@@ -138,10 +147,28 @@ class ResourceFactory implements ServiceLocatorAwareInterface
 	{
 		if (is_object($document)) $documentClass = get_class($document);
 		if (is_string($document)) $documentClass = $document;
-		foreach ($this->halMapping as $class => $controller){
+		foreach ($this->halMapping as $class => $config){
 			if (strpos($documentClass,$class) === false) continue;
-			return $controller;
+			return $config['controller'];
 		}
+	}
+	
+	/**
+	 * Adding non persitent data to resource
+	 * 
+	 * @param unknown $document
+	 */
+	protected function getNonPersistentData($document)
+	{
+		if (is_object($document)) $documentClass = get_class($document);
+		if (is_string($document)) $documentClass = $document;
+		foreach ($this->halMapping as $class => $config){
+			if (strpos($documentClass,$class) === false) continue;
+			if ( ! isset($config['extraMapping'])) continue;
+			if ( ! isset($config['extraMapping']['assocs'])) continue;
+			return $config['extraMapping']['assocs'];
+		}
+		return array();
 	}
 
 }

@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  * @ODM\InheritanceType("SINGLE_COLLECTION")
  * @ODM\DiscriminatorField(fieldName="__type__")
  * @ODM\DiscriminatorMap({
- *   "Environment\Model\Device\Jenkins"="Environment\Model\Device\Jenkins",
+ *   "Jenkins\Model\Device\Jenkins"="Jenkins\Model\Device\Jenkins",
  * })
  */
 class Device extends DeviceAbstract
