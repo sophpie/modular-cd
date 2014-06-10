@@ -42,7 +42,8 @@ return array(
                     'Repository\Model\GitHub\GitHubRepository' => 'cronus_odm',
                 	'Environment\Model\Environment' => 'cronus_odm',
                 	'Environment\Model\Device\Device' => 'cronus_odm',
-                	'Jenkins\Model\Device\Jenkins' => 'cronus_odm',
+                	'Extension\Jenkins\Model\Device\Jenkins' => 'cronus_odm',
+                	'Extension\GitHub\Model\Device\GitHub' => 'cronus_odm',
                 )
             )
             ,

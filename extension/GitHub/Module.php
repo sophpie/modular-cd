@@ -1,6 +1,6 @@
 <?php
 
-namespace Extension\Jenkins;
+namespace Extension\GitHub;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
@@ -11,7 +11,7 @@ class Module implements AutoloaderProviderInterface
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/Jenkins',
+                    __NAMESPACE__ => __DIR__ . '/src/GitHub',
                 ),
             ),
         );
@@ -19,6 +19,6 @@ class Module implements AutoloaderProviderInterface
 
     public function getConfig()
     {
-        return include __DIR__ . '/config/jenkins.config.php';
+        return include __DIR__ . '/config/github.config.php';
     }
 }

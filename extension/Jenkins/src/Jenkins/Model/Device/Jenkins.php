@@ -1,5 +1,5 @@
 <?php
-namespace Jenkins\Model\Device;
+namespace Extension\Jenkins\Model\Device;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use ZendPattern\Jenkins\ApiManager;
@@ -41,6 +41,11 @@ class Jenkins extends Device
 	{
 		$jobList = $this->getApiManager()->getJobList();
 		return $jobList['jobs'];
+	}
+	
+	public function getJob($jobName)
+	{
+		
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 <?php
-namespace Jenkins\Controller;
+namespace Extension\Jenkins\Controller;
 
 use Common\Controller\ControllerAbstract;
 

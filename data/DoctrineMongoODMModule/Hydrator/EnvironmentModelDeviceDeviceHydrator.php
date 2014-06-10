@@ -35,6 +35,14 @@ class EnvironmentModelDeviceDeviceHydrator implements HydratorInterface
             $hydratedData['name'] = $return;
         }
 
+        /** @Field(type="string") */
+        if (isset($data['deviceType'])) {
+            $value = $data['deviceType'];
+            $return = (string) $value;
+            $this->class->reflFields['deviceType']->setValue($document, $return);
+            $hydratedData['deviceType'] = $return;
+        }
+
         /** @Field(type="id") */
         if (isset($data['_id'])) {
             $value = $data['_id'];
