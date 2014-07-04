@@ -2,7 +2,6 @@
 
 .menu {
   list-style: none;
-  border-bottom: 0.1em solid black;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
 }
@@ -28,6 +27,29 @@
   content: "";
   padding: 0;
 }
+/* ----- Base CSS ----- */
+.blue{
+	color:#2177A4;
+}
+.bold{
+	font-weight : bold;
+}
+.large{
+	font-size : 120%;
+}
+.floatRight{
+	float:right;
+}
+.box {
+	padding:0.2em;
+	display:block;
+	background-color: #111111;
+    color: #FFFFFF;
+    border : 1px solid #333333;
+}
+/* ----- image ----- */
+.smallImage{}
+
 /* ----- Main content ----- */
 .leftColumn {
 	float: left;
@@ -39,13 +61,17 @@
 .content{
 	float: left;
     display: block;
+	padding-right : 1em;
     width: 75%;
+}
+body {
+	background-color: #000000;
+	color : #FFFFFF;
 }
 
 /* ----- Headers ----- */
 h1 {
-	font-color : #FFFFFF;
-	background-color : #CFCFFF;
+	background-color : #2177A4;
 	margin :0px;
 	padding : 10px;
 }
@@ -57,15 +83,78 @@ ul.noList{
 }
 ul.noList > li{
     list-style: none;
-	border-bottom : 1px solid #CCCCCC;
+	border-bottom : 1px solid #333333;
+	background-color: #111111;
 }
 ul.noList > li > a,p {
 	display:block;
 	padding : 0.5em;
-	color : #000000;
+	color : #FFFFFF;
 }
 ul.noList > li > a:hover {
     text-decoration:none;
-	background-color:#EEEEEE;
+	background-color:#777777;
 	
+}
+/* ----- Form ----- */
+input,textarea,button {
+	background-color: #111111;
+	color: #FFFFFF;
+	border : 1px solid #333333;
+	padding : 0.2em;
+	margin : 0.2em;
+}
+ul.formElementList{
+	padding : 0px;
+    margin : 0px;
+}
+
+ul.formElementList > li{
+    list-style: none;
+}
+
+ul.formElementList label{
+	display:block;
+}
+
+ul.formElementList input,textarea{
+    display:block;
+	width : 100%;
+}
+
+ul.buttonBar {
+	display:block;
+    width : 100%;
+	height : 40px;
+	overflaw : hidden;
+	padding : 0px;
+    margin : 0px;
+}
+
+ul.buttonBar > li{
+	float:left;
+	list-style: none;
+}
+
+/* ----- Tags ----- */
+.tag {
+	display:block;
+	float: left;
+	width: 25%;
+	padding:0.2em;
+}
+.tagContent {
+	display:block;
+	padding : 0.2em;
+	height: 60px;
+	overflow : hidden;
+	background-color: #111111;
+    color: #FFFFFF;
+    border : 1px solid #333333;
+}
+
+a.tagContent:hover {
+	text-decoration:none;
+	border-color: #AAAAAA;
+	background-color: #EEEEEE;
 }

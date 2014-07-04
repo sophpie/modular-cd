@@ -30,7 +30,7 @@ use Doctrine\ODM\MongoDB\UnitOfWork;
  *
  * Priming a field mapped as either reference-one or reference-many will load
  * the referenced document(s) eagerly and avoid individual lazy loading through
- * Proxy object initialization.
+ * proxy object initialization.
  *
  * Priming can only be used for the owning side side of a relationship, since
  * the referenced identifiers are not immediately available on an inverse side.

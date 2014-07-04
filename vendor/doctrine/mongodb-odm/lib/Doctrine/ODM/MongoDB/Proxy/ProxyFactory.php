@@ -32,7 +32,7 @@ use Doctrine\ODM\MongoDB\Persisters\DocumentPersister;
 use ReflectionProperty;
 
 /**
- * This factory is used to create Proxy objects for documents at runtime.
+ * This factory is used to create proxy objects for documents at runtime.
  *
  * @since       1.0
  * @author      Jonathan H. Wage <jonwage@gmail.com>
@@ -53,7 +53,7 @@ class ProxyFactory extends AbstractProxyFactory
     private $uow;
 
     /**
-     * @var string The namespace that contains all Proxy classes.
+     * @var string The namespace that contains all proxy classes.
      */
     private $proxyNamespace;
 
@@ -62,10 +62,10 @@ class ProxyFactory extends AbstractProxyFactory
      * connected to the given <tt>DocumentManager</tt>.
      *
      * @param \Doctrine\ODM\MongoDB\DocumentManager $documentManager The DocumentManager the new factory works for.
-     * @param string                                $proxyDir        The directory to use for the Proxy classes. It
+     * @param string                                $proxyDir        The directory to use for the proxy classes. It
      *                                                               must exist.
-     * @param string                                $proxyNamespace  The namespace to use for the Proxy classes.
-     * @param integer                               $autoGenerate    Whether to automatically generate Proxy classes.
+     * @param string                                $proxyNamespace  The namespace to use for the proxy classes.
+     * @param integer                               $autoGenerate    Whether to automatically generate proxy classes.
      */
     public function __construct(DocumentManager $documentManager, $proxyDir, $proxyNamespace, $autoGenerate = AbstractProxyFactory::AUTOGENERATE_NEVER)
     {
@@ -108,7 +108,7 @@ class ProxyFactory extends AbstractProxyFactory
     }
 
     /**
-     * Generates a closure capable of initializing a Proxy
+     * Generates a closure capable of initializing a proxy
      *
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $classMetadata
      * @param \Doctrine\ODM\MongoDB\Persisters\DocumentPersister $documentPersister
@@ -179,7 +179,7 @@ class ProxyFactory extends AbstractProxyFactory
     }
 
     /**
-     * Generates a closure capable of finalizing a cloned Proxy
+     * Generates a closure capable of finalizing a cloned proxy
      *
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $classMetadata
      * @param \Doctrine\ODM\MongoDB\Persisters\DocumentPersister $documentPersister

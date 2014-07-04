@@ -43,6 +43,23 @@ class EnvironmentModelDeviceDeviceHydrator implements HydratorInterface
             $hydratedData['deviceType'] = $return;
         }
 
+        /** @ReferenceOne */
+        if (isset($data['environment'])) {
+            $reference = $data['environment'];
+            if (isset($this->class->fieldMappings['environment']['simple']) && $this->class->fieldMappings['environment']['simple']) {
+                $className = $this->class->fieldMappings['environment']['targetDocument'];
+                $mongoId = $reference;
+            } else {
+                $className = $this->unitOfWork->getClassNameForAssociation($this->class->fieldMappings['environment'], $reference);
+                $mongoId = $reference['$id'];
+            }
+            $targetMetadata = $this->dm->getClassMetadata($className);
+            $id = $targetMetadata->getPHPIdentifierValue($mongoId);
+            $return = $this->dm->getReference($className, $id);
+            $this->class->reflFields['environment']->setValue($document, $return);
+            $hydratedData['environment'] = $return;
+        }
+
         /** @Field(type="id") */
         if (isset($data['_id'])) {
             $value = $data['_id'];

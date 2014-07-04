@@ -40,12 +40,23 @@ class Jenkins extends Device
 	public function getJobs()
 	{
 		$jobList = $this->getApiManager()->getJobList();
-		return $jobList['jobs'];
+		$result = array();
+		foreach ($jobList['jobs'] as $job ){
+			$name = $job['name'];
+			$result[] = $this->getJob($name);
+		}
+		return $result;
 	}
 	
+	/**
+	 * Get job detail
+	 * 
+	 * @param unknown $jobName
+	 * @return Ambigous <multitype:, mixed>
+	 */
 	public function getJob($jobName)
 	{
-		
+		return $this->getApiManager()->getJob($jobName);
 	}
 	
 	/**

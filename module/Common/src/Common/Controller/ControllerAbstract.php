@@ -82,6 +82,7 @@ abstract class ControllerAbstract extends AbstractRestfulController
 	public function onDispatch(MvcEvent $e)
 	{
 		$result = parent::onDispatch($e);
+		$this->getDocumentManager()->flush();
 		if ($result instanceof Resource) $resource = $result;
 		else $resource = $this->doctrine2Hal($result);
 		$response = $this->getResponse();
@@ -127,9 +128,9 @@ abstract class ControllerAbstract extends AbstractRestfulController
 	 */
 	public function get($id)
 	{
-		$object = $this->getDocumentManager()->find($this->getDocumentClassName(),$id);
-		if ( ! $object) return null;
-		return $object;
+		$document = $this->getDocumentManager()->find($this->getDocumentClassName(),$id);
+		if ( ! $document) return null;
+		return $document;
 	}
 	
 	/**
@@ -142,11 +143,11 @@ abstract class ControllerAbstract extends AbstractRestfulController
 		$object = new $objectClass();
 		foreach ($data as $key => $value){
 			if ( ! in_array($key, $this->getMetadata()->getFieldNames())) continue;
+			if (in_array($key, $this->getMetadata()->getAssociationNames())) continue;
 			$setter = 'set' . ucfirst($key);
 			$object->$setter($value);
 		}
 		$this->getDocumentManager()->persist($object);
-		$this->getDocumentManager()->flush();
 		return $object;
 	}
 	
@@ -160,11 +161,23 @@ abstract class ControllerAbstract extends AbstractRestfulController
 		if ( ! $object) return null;
 		foreach ($data as $key => $value){
 			if ( ! in_array($key, $this->getMetadata()->getFieldNames())) continue;
+			if (in_array($key, $this->getMetadata()->getAssociationNames())) continue;
 			$setter = 'set' . ucfirst($key);
 			$object->$setter($value);
 		}
 		$this->getDocumentManager()->persist($object);
-		$this->getDocumentManager()->flush();
+		return $object;
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see \Zend\Mvc\Controller\AbstractRestfulController::delete()
+	 */
+	public function delete($id)
+	{
+		$object = $this->getDocumentManager()->find($this->getDocumentClassName(),$id);
+		if ( ! $object) return null;
+		$this->getDocumentManager()->remove($object);
 		return $object;
 	}
 }

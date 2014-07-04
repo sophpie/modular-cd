@@ -6,7 +6,8 @@
     "php" : ">=5.3.3",
     "zendframework/zendframework" : ">2.2.0rc1",
     "doctrine/doctrine-mongo-odm-module" : "dev-master",
-    "zfr/zfr-cors" : "=v1.1.2"
+    "zfr/zfr-cors" : "=v1.1.2",
+    "knplabs/github-api" : "=1.2.2"
   },
   "keywords" : [ "framework", "zf2" ],
   "minimum-stability" : "alpha",

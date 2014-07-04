@@ -20,7 +20,7 @@
 namespace Doctrine\ODM\MongoDB;
 
 /**
- * Class for exception when encountering Proxy object that has
+ * Class for exception when encountering proxy object that has
  * an identifier that does not exist in the database.
  *
  * @since       1.0

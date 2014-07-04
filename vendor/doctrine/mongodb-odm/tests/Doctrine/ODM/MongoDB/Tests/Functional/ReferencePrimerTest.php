@@ -61,7 +61,7 @@ class ReferencePrimerTest extends \Doctrine\ODM\MongoDB\Tests\BaseTest
             $this->assertCount(2, $user->getGroups());
 
             /* Since the Groups are primed before the PersistentCollection is
-             * initialized, they will not be hydrated as Proxy objects.
+             * initialized, they will not be hydrated as proxy objects.
              */
             foreach ($user->getGroups() as $group) {
                 $this->assertNotInstanceOf('Doctrine\ODM\MongoDB\Proxy\Proxy', $group);

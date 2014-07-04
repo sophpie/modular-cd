@@ -557,7 +557,7 @@ class UnitOfWork implements PropertyChangedListener
         $this->computeScheduleInsertsChangeSets();
         $this->computeScheduleUpsertsChangeSets();
 
-        // Ignore uninitialized Proxy objects
+        // Ignore uninitialized proxy objects
         if ($document instanceof Proxy && ! $document->__isInitialized__) {
             return;
         }
@@ -798,11 +798,10 @@ class UnitOfWork implements PropertyChangedListener
                 $changeSet[$propName] = array($orgValue, $actualValue);
             }
             if ($changeSet) {
-                if ($recompute) {
-                    $this->documentChangeSets[$oid] = $changeSet + $this->documentChangeSets[$oid];
-                } else {
-                    $this->documentChangeSets[$oid] = $changeSet;
-                }
+                $this->documentChangeSets[$oid] = ($recompute && isset($this->documentChangeSets[$oid]))
+                    ? $changeSet + $this->documentChangeSets[$oid]
+                    : $changeSet;
+
                 $this->originalDocumentData[$oid] = $actualData;
                 $this->documentUpdates[$oid] = $document;
             }
@@ -872,7 +871,7 @@ class UnitOfWork implements PropertyChangedListener
                     : $documents;
 
             foreach ($documentsToProcess as $document) {
-                // Ignore uninitialized Proxy objects
+                // Ignore uninitialized proxy objects
                 if (/* $document is readOnly || */ $document instanceof Proxy && ! $document->__isInitialized__) {
                     continue;
                 }
@@ -918,7 +917,7 @@ class UnitOfWork implements PropertyChangedListener
 
         if ($mapping['type'] === 'one') {
             if ($value instanceof Proxy && ! $value->__isInitialized__) {
-                return; // Ignore uninitialized Proxy objects
+                return; // Ignore uninitialized proxy objects
             }
             $value = array($value);
         } elseif ($value instanceof PersistentCollection) {
@@ -3043,7 +3042,7 @@ class UnitOfWork implements PropertyChangedListener
     }
 
     /**
-     * Helper method to initialize a lazy loading Proxy or persistent collection.
+     * Helper method to initialize a lazy loading proxy or persistent collection.
      *
      * @param object
      * @return void

@@ -1,18 +1,73 @@
-<h1>Manage your environments</h1>
+<h1>Manage environments</h1>
 <div ng-controler="Environment_Ctrl">
 	<div class="leftColumn">
-	<ul class="noList">
+	
+	<!-- Environments list -->
+	<ul class="noList" ng-model="environmentList">
 	    <li ng-repeat="environment in environmentList.environments">
 	        <a ng-click="getEnvironment(environment.id);">{{environment.name}}</a>
 	    </li>
 	</ul>
+	<a ng-click="editEnvironement()">New environment</a>
 	</div>
 	
 	<div class="content" ng-model="environment">
+	
+	
 	   <h3>{{environment.name}}</h3>
+	   
+	   <hr>
+	   
+	   <form  ng-submit="submitEnvironment(environment.id)">
+           <ul>
+               <li ng-show="editMode">
+                   <label for="name">Name : </label>
+                   <input type="text" ng-model="environment.name"/>
+               </li>
+               <li>
+                   <label for="Description">Description : </label>
+                   <textarea ng-model="environment.description">{{environment.description}}</textarea>
+               </li>
+               <li ng-show="editMode">
+                   <button type="submit">Validate</button>
+               </li>
+           </ul>
+           
+       </form>
+       <a ng-hide="editMode" ng-click="editEnvironment()">Edit</a>
+	   
+	   <!--  Current devices list -->
        <div ng-repeat="device in environment.devices">
            <ng-include src="'partials/devices/' + device.deviceType + '/dashboard.html'">
            </ng-include>
        </div>
+       <hr>
+       <!-- Adding new device -->
+       <form ng-submit="addNewDevice()">
+          <ul>
+               <li>
+                   <label for="name">Name : </label>
+                   <input type="text" ng-model="newDevice.name"/>
+               </li>
+               <li>
+                    <label for="type">Device type : </label>
+                    <select ng-model="newDevice.deviceType">
+                        <option value="jenkins">Jenkins</option>
+                        <option value="github">GitHub</option>
+                        <option value="zendserver">ZendServer</option>
+                    </select>
+               </li>
+               <li>
+                   <button type="submit">Add device</button>
+               </li>
+           </ul>
+       </form>
+       
+       
+       
+       <!-- Environment data -->
+       
 	</div>
+	
+</div>
 

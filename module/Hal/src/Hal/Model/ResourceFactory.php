@@ -6,6 +6,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Hal\Model\Resource;
 use Doctrine\ODM\MongoDB\Cursor;
 use Common\Model\AngularFragmentProviderInterface;
+use Doctrine\ODM\MongoDB\PersistentCollection;
 
 class ResourceFactory implements ServiceLocatorAwareInterface
 {
@@ -68,7 +69,7 @@ class ResourceFactory implements ServiceLocatorAwareInterface
      * @param document $document
      * @param string $selfHref : self href link
      */
-    public function fromDoctrineDocument($document)
+    public function fromDoctrineDocument($document, $followAssoc = true)
     {
     	$resource = new Resource();
     	$resource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($document) . '/' . $document->getId());
@@ -79,27 +80,32 @@ class ResourceFactory implements ServiceLocatorAwareInterface
     		if (in_array($field, $metada->getAssociationNames())) continue;
     		$getter = 'get' . ucfirst($field);
     		$value = $document->$getter();
+    		if (is_object($value)) $value = $this->fromDoctrineDocument($value,false);
     		$resource->addProperty($field, $value);
-    	}
-    	foreach ($metada->getAssociationNames() as $assoc){
-    		$getter = 'get' . ucfirst($assoc);
-    		$collection = $document->$getter();
-    		$embeddedArray = array();
-    		foreach ($collection as $id => $item){
-    			$embeddedResource = $this->fromDoctrineDocument($item);
-    			$embeddedResource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($item) . '/' . $item->getId());
-    			$embeddedArray[] = $embeddedResource;
-    		}
-    		$resource->addEmbbeded($assoc, $embeddedArray);
     	}
     	foreach ($this->getNonPersistentData($document) as $assoc){
     		$getter = 'get' . ucfirst($assoc);
     		if ( ! method_exists($document, $getter)) continue;
     		$resource->addProperty($assoc, $document->$getter());
     	}
-    	if ($document instanceof AngularFragmentProviderInterface) {
-    		$resource->addProperty('fragmentDir', $document->getAngularFragmentDir());
+    	if ( ! $followAssoc) return $resource;
+    	foreach ($metada->getAssociationNames() as $assoc){
+    		$getter = 'get' . ucfirst($assoc);
+    		$collection = $document->$getter();
+    		if ($collection instanceof  PersistentCollection) {
+	    		$embeddedArray = array();
+	    		foreach ($collection as $id => $item){
+	    			$embeddedResource = $this->fromDoctrineDocument($item,false);
+	    			$embeddedResource->addLink(Resource::LINK_TYPE_SELF, '/' . $this->getController($item) . '/' . $item->getId());
+	    			$embeddedArray[] = $embeddedResource;
+	    		}
+	    		$resource->addEmbbeded($assoc, $embeddedArray);
+    		}
+    		else {
+    			$resource->addEmbbeded($assoc, $this->fromDoctrineDocument($collection,false));
+    		}
     	}
+    	
     	return $resource;
     }
     
@@ -162,13 +168,16 @@ class ResourceFactory implements ServiceLocatorAwareInterface
 	{
 		if (is_object($document)) $documentClass = get_class($document);
 		if (is_string($document)) $documentClass = $document;
+		$mergedConfig = array();
 		foreach ($this->halMapping as $class => $config){
 			if (strpos($documentClass,$class) === false) continue;
 			if ( ! isset($config['extraMapping'])) continue;
 			if ( ! isset($config['extraMapping']['assocs'])) continue;
-			return $config['extraMapping']['assocs'];
+			$mergedConfig =  $config['extraMapping']['assocs'];
 		}
-		return array();
+		$parent = get_parent_class($document);
+		if ($parent !== false) $mergedConfig = array_merge($mergedConfig, $this->getNonPersistentData($parent));
+		return $mergedConfig;
 	}
 
 }

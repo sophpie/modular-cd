@@ -142,7 +142,8 @@ class DocumentManager implements ObjectManager
      * @param Configuration|null $config
      * @param \Doctrine\Common\EventManager|null $eventManager
      */
-    protected function __construct(Connection $conn = null, Configuration $config = null, EventManager $eventManager = null) {
+    protected function __construct(Connection $conn = null, Configuration $config = null, EventManager $eventManager = null)
+    {
         $this->config = $config ?: new Configuration();
         $this->eventManager = $eventManager ?: new EventManager();
         $this->connection = $conn ?: new Connection(null, array(), $this->config, $this->eventManager);
@@ -176,7 +177,7 @@ class DocumentManager implements ObjectManager
     }
 
     /**
-     * Gets the Proxy factory used by the DocumentManager to create document proxies.
+     * Gets the proxy factory used by the DocumentManager to create document proxies.
      *
      * @return ProxyFactory
      */
@@ -231,7 +232,7 @@ class DocumentManager implements ObjectManager
     }
 
     /**
-     * Helper method to initialize a lazy loading Proxy or persistent collection.
+     * Helper method to initialize a lazy loading proxy or persistent collection.
      *
      * This method is a no-op for other objects.
      *
@@ -547,7 +548,7 @@ class DocumentManager implements ObjectManager
      * without actually loading it.
      *
      * If partial objects are allowed, this method will return a partial object that only
-     * has its identifier populated. Otherwise a Proxy is returned that automatically
+     * has its identifier populated. Otherwise a proxy is returned that automatically
      * loads itself on first access.
      *
      * @param string $documentName

@@ -13,6 +13,10 @@ return array(
 		),
 		'Environment\Model\Device\Device' => array(
 				'controller' => 'device',
+				'extraMapping' => array(
+    						'assocs' => array('deviceClass'),
+    						'properties' => array(),
+    				),
 		),
 	),
 );

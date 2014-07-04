@@ -146,7 +146,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
-     * Sets the directory where Doctrine generates any necessary Proxy class files.
+     * Sets the directory where Doctrine generates any necessary proxy class files.
      *
      * @param string $dir
      */
@@ -156,7 +156,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
-     * Gets the directory where Doctrine generates any necessary Proxy class files.
+     * Gets the directory where Doctrine generates any necessary proxy class files.
      *
      * @return string
      */
@@ -167,7 +167,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
-     * Gets a boolean flag that indicates whether Proxy classes should always be regenerated
+     * Gets a boolean flag that indicates whether proxy classes should always be regenerated
      * during each script execution.
      *
      * @return boolean|integer
@@ -179,7 +179,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
-     * Sets a boolean flag that indicates whether Proxy classes should always be regenerated
+     * Sets a boolean flag that indicates whether proxy classes should always be regenerated
      * during each script execution.
      *
      * @param boolean|int $bool Possible values are constants of Doctrine\Common\Proxy\AbstractProxyFactory
@@ -190,7 +190,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
-     * Gets the namespace where Proxy classes reside.
+     * Gets the namespace where proxy classes reside.
      *
      * @return string
      */
@@ -201,7 +201,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
-     * Sets the namespace where Proxy classes reside.
+     * Sets the namespace where proxy classes reside.
      *
      * @param string $ns
      */

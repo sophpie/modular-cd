@@ -4,6 +4,7 @@ namespace Environment\Model;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Environment\Model\Device\DeviceAbstract;
 use Common\Model\PersistentInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /** @ODM\MappedSuperclass */
 abstract class EnvironmentAbstract implements EnvironmentInterface, PersistentInterface
@@ -19,12 +20,28 @@ abstract class EnvironmentAbstract implements EnvironmentInterface, PersistentIn
     protected $name;
     
     /**
+     * Environment description
+     * 
+     * @ODM\String
+     * @var string
+     */
+    protected $description;
+    
+    /**
      * Array of devices
      * 
      * @ODM\ReferenceMany(targetDocument="Environment\Model\Device\Device")
-     * @var array
+     * @var ArtrayCollection
      */
-    protected $devices = array();
+    protected $devices;
+    
+    /**
+     * Constructor 
+     */
+    public function __construct()
+    {
+    	$this->devices = new ArrayCollection();
+    }
     
 	/**
 	 * @return the $name
@@ -61,7 +78,34 @@ abstract class EnvironmentAbstract implements EnvironmentInterface, PersistentIn
 	 */
 	public function addDevice(DeviceAbstract $device)
 	{
-		$id = $device->getId();
-		$this->devices[$id] = $device;
+		$this->getDevices()->add($device);
 	}
+	
+	/**
+	 * remove a device
+	 * 
+	 * @param DeviceAbstract $device
+	 */
+	public function removeDevice(DeviceAbstract $device)
+	{
+		foreach ($this->getDevices() as $key => $d) {
+			if ($d->getId() == $device->getId()){
+				$this->getDevices()->remove($key);
+			}
+		}
+	}
+	/**
+	 * @return the $description
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @param string $description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
 }

@@ -25,7 +25,7 @@ use Symfony\Component\Console;
 use Doctrine\ODM\MongoDB\Tools\Console\MetadataFilter;
 
 /**
- * Command to (re)generate the Proxy classes used by doctrine.
+ * Command to (re)generate the proxy classes used by doctrine.
  *
  * @since   1.0
  * @author  Benjamin Eberlei <kontakt@beberlei.de>
@@ -42,7 +42,7 @@ class GenerateProxiesCommand extends Console\Command\Command
     {
         $this
         ->setName('odm:generate:proxies')
-        ->setDescription('Generates Proxy classes for document classes.')
+        ->setDescription('Generates proxy classes for document classes.')
         ->setDefinition(array(
             new InputOption(
                 'filter', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
@@ -50,11 +50,11 @@ class GenerateProxiesCommand extends Console\Command\Command
             ),
             new InputArgument(
                 'dest-path', InputArgument::OPTIONAL,
-                'The path to generate your Proxy classes. If none is provided, it will attempt to grab from configuration.'
+                'The path to generate your proxy classes. If none is provided, it will attempt to grab from configuration.'
             ),
         ))
         ->setHelp(<<<EOT
-Generates Proxy classes for document classes.
+Generates proxy classes for document classes.
 EOT
         );
     }

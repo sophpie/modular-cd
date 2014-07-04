@@ -35,6 +35,14 @@ class EnvironmentModelEnvironmentHydrator implements HydratorInterface
             $hydratedData['name'] = $return;
         }
 
+        /** @Field(type="string") */
+        if (isset($data['description'])) {
+            $value = $data['description'];
+            $return = (string) $value;
+            $this->class->reflFields['description']->setValue($document, $return);
+            $hydratedData['description'] = $return;
+        }
+
         /** @Many */
         $mongoData = isset($data['devices']) ? $data['devices'] : null;
         $return = new \Doctrine\ODM\MongoDB\PersistentCollection(new \Doctrine\Common\Collections\ArrayCollection(), $this->dm, $this->unitOfWork);
